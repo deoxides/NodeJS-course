@@ -20,7 +20,8 @@ class Server{
     }
 
     routes(){
-        this.app.use('/api/users',require('../routes/users.route'))
+        this.app.use('/auth',require('../routes/auth.route'));
+        this.app.use('/api/users',require('../routes/users.route'));
     }
     listener(){
         this.app.listen(this.port,()=>{

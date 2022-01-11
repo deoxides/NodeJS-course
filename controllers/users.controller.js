@@ -56,7 +56,8 @@ const DeleteUsuarios = async(req, res = response) => {
   const user = await User.findByIdAndUpdate(id,{status:false});
   res.status(200).json({
     msg: "DELETE - All OK",
-    user
+    user,
+    deletedBy:req.user.name
   });
   res.end();
 };
