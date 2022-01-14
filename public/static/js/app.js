@@ -1,6 +1,7 @@
 function handleCredentialResponse(response) {
   const body = { id_token: response.credential };
-  fetch("http://localhost:8080/auth/google", {
+  var url = (window.location.hostname.includes('localhost')) ? 'http://localhost:8080/auth/google' : 'https://backend-nodejs-course.herokuapp.com/auth/google'
+  fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -54,13 +55,11 @@ function startApp() {
       button = pillButton;
       button.width = '200px'
   }
-  console.log(button)
   google.accounts.id.initialize({
     client_id: "182365430926-86qies9agmltg7rfle1fm9tvg7e2l8l9.apps.googleusercontent.com",
     callback: handleCredentialResponse,
   });
   google.accounts.id.renderButton(document.getElementById("google_signin"),button);
-  
 }
 
 window.onload = startApp();
