@@ -1,0 +1,27 @@
+body{
+    overflow: hidden;
+}
+
+ul{
+    list-style: none;
+    text-decoration: none;
+}
+
+.box{
+    position: relative;
+}
+
+.container{
+    position: relative;
+    max-width: 400px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    border:1px solid black;
+}
+
+.navbar-brand > img{
+    height: 37px;
+    width: auto;
+}
+
