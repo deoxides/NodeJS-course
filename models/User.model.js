@@ -30,7 +30,7 @@ const UserSchema = Schema({
         required:[true,'Each user must have one role at least'],
         enum:['ADMIN_ROLE','USER_ROLE']
     },
-    status:{
+    state:{
         type:Boolean,
         default:true
     }

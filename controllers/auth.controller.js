@@ -1,5 +1,5 @@
 const { response, request } = require("express");
-const User = require("../models/ODM/User.model");
+const {User} = require("../models");
 const bcrypt = require('bcryptjs');
 const { createToken } = require("../helpers/jwt");
 const { googleVerify } = require("../helpers/google-identity");
@@ -13,9 +13,9 @@ const login = async(req = request,res = response) =>{
                 msg:'The email or password is not correct'
             })
         }
-        if(!user.status){
+        if(!user.state){
             return res.status(400).json({
-                msg:'Your account is dehabilited'
+                msg:'Your account is disabled'
             })
         }
         if(!bcrypt.compareSync(password,user.password)){
@@ -47,8 +47,8 @@ const googleSignIn = async(req,res = response) =>{
         })
     } catch (error) {
         console.log(error);
-        res.status(500).json({
-            msg:'Something goes wrong'
+        res.status(400).json({
+            msg:'Invalid token'
         })
     }
 }

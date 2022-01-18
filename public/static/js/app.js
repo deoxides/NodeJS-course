@@ -1,6 +1,6 @@
 function handleCredentialResponse(response) {
   const body = { id_token: response.credential };
-  var url = (window.location.hostname.includes('localhost')) ? 'http://localhost:8080/auth/google' : 'https://backend-nodejs-course.herokuapp.com/auth/google'
+  var url = (window.location.hostname.includes('localhost')) ? 'http://localhost:8080/api/auth/google' : 'https://backend-nodejs-course.herokuapp.com/api/auth/google'
   fetch(url, {
     method: "POST",
     headers: {
