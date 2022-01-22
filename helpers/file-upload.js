@@ -53,7 +53,7 @@ const uploadFile = (files, extensions = defaultExtensions, folder = "", local = 
       resolve(uploadPath);
     } else {
       await cloudinary.uploader.upload(file.tempFilePath)
-      .then(path => resolve(path))
+      .then(res => resolve(res.secure_url))
       .catch(error => { 
         console.log(error);
         reject(error)
