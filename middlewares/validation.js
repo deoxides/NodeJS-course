@@ -38,13 +38,21 @@ const validateAdminRole = async (req = request, res = response, next) => {
   }
 };
 
-const validateCollection = (req = request, res = response, next) => {
-  const { collection } = req.params;
-  mongoose.connection.db.collectionNames(function (err, names) {
-    console.log(names);
-  });
-  next();
-};
+const validateCollections = (collection = '',collections =[]) =>{
+  if(!collections.includes(collection)){
+    throw new Error(`The collection ${collection} is not allowed`)
+  }
+  return true;
+}
+
+const validateFiles = (req= request, res = response, next) =>{
+  if (!req.files || Object.keys(req.files).length === 0 || !req.files.file) {
+    return res.status(400).json({
+      msg: "No files were uploaded.",
+    });
+  }
+  next()
+}
 
 const validateJWT = async (req = request, res = response, next) => {
   const token = req.header("x-token");
@@ -97,7 +105,8 @@ const validateRole = (...roles) => {
 module.exports = {
   handlerErrorResult,
   validateAdminRole,
-  validateCollection,
+  validateCollections,
+  validateFiles,
   validateJWT,
   validateRole,
 };

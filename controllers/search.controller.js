@@ -60,16 +60,8 @@ const searchUsers = async (query = "", res = response) => {
   }
 };
 
-const search = async (req = request, res = response) => {
+const postSearch = async (req = request, res = response) => {
   const { collection, query } = req.params;
-  const collections = (
-    await mongoose.connection.db.listCollections().toArray()
-  ).map((elem) => elem.name);
-  if (!collections.includes(collection)) {
-    return res.status(400).json({
-      msg: "The collection requested does not exist",
-    });
-  }
   switch (collection) {
     case "categories":
       searchCategories(query, res);
@@ -86,5 +78,5 @@ const search = async (req = request, res = response) => {
 };
 
 module.exports = {
-  search,
+  search: postSearch,
 };

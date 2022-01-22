@@ -9,8 +9,8 @@ const getProducts = async (req, res = response) => {
       Product.find(query)
         .skip(Number(from))
         .limit(Number(limit))
-        .populate("user")
-        .populate("category"),
+        .populate("user",'name')
+        .populate("category",'name'),
       Product.countDocuments(query),
     ]);
     res.json({
@@ -28,10 +28,9 @@ const getProducts = async (req, res = response) => {
 const getProductById = async (req, res = response) => {
   try {
     const { id } = req.params;
-    const product = await Product.findById(id).populate([
-      { path: "user", model: "User" },
-      { path: "category", model: "Category" },
-    ]);
+    const product = await Product.findById(id)
+                                  .populate('users','name')
+                                  .populate('category','name');
     if (!product) {
       return res.status(400).json({
         msg: "Product not found",

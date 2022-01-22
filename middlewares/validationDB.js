@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const { Category,Product, Role, User } = require("../models");
 
 const checkCategoryIdDB = async (id = "") => {
@@ -6,6 +7,13 @@ const checkCategoryIdDB = async (id = "") => {
       throw new Error(`Cannot find category with ID ${id}`);
     }
 };
+
+const checkCollectionDB = async(collection = '') =>{
+  const collections = (await mongoose.connection.db.listCollections().toArray()).map((elem) => elem.name);
+  if (!collections.includes(collection)) {
+      throw new Error(`The collection ${collection} does not exist`)
+  }
+}
 const checkProductIdDB = async(id='') =>{
   if(!(await Product.findById(id).exec())){
     throw new Error(`Cannot find product with ID ${id}`)
@@ -30,6 +38,7 @@ const checkEmailDB = async (email = "") => {
 
 module.exports = {
   checkCategoryIdDB,
+  checkCollectionDB,
   checkProductIdDB,
   checkUserIdDB,
   checkRoleDB,

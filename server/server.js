@@ -1,6 +1,8 @@
-const express = require("express");
 const cors = require("cors");
+const express = require("express");
+const fileUpload = require('express-fileupload')
 const { dbConnection } = require("../database/config.db");
+const {auth,categories,products,search,uploads,users} = require('../routes');
 
 class Server {
   constructor() {
@@ -9,11 +11,12 @@ class Server {
     this.connectDB();
     this.middleware();
     this.paths = {
-      auth: "/api/auth",
-      categories: "/api/categories",
-      products: "/api/products",
-      search:"/api/search",
-      users: "/api/users",
+        auth: "/api/auth",
+        categories: "/api/categories",
+        products: "/api/products",
+        search:"/api/search",
+        uploads:"/api/uploads",
+        users: "/api/users",
     };
     this.routes();
   }
@@ -24,14 +27,16 @@ class Server {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.static("public"));
+    this.app.use(fileUpload({useTempFiles : true,tempFileDir : '/tmp/',createParentPath:true}));
   }
 
   routes() {
-    this.app.use(this.paths.auth, require("../routes/auth.route"));
-    this.app.use(this.paths.categories,require('../routes/categories.route'));
-    this.app.use(this.paths.products,require('../routes/products.route'));
-    this.app.use(this.paths.search,require('../routes/search.route'));
-    this.app.use(this.paths.users, require("../routes/users.route"));
+    this.app.use(this.paths.auth, auth);
+    this.app.use(this.paths.categories,categories);
+    this.app.use(this.paths.products,products);
+    this.app.use(this.paths.search,search);
+    this.app.use(this.paths.uploads,uploads);
+    this.app.use(this.paths.users, users);
   }
   listener() {
     this.app.listen(this.port, () => {

@@ -1,6 +1,6 @@
 const { response, request } = require("express");
 const {User} = require("../models");
-const { hashPassword } = require("../helpers/bcrypt");
+const { hashPassword } = require("../helpers");
 
 const GetUsuarios = async (req, res = response) => {
   const query = { state: true };
