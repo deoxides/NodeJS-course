@@ -52,8 +52,12 @@ const uploadFile = (files, extensions = defaultExtensions, folder = "", local = 
       });
       resolve(uploadPath);
     } else {
-      const {secure_url} = await cloudinary.uploader.upload(file.tempFilePath);
-      resolve(secure_url);
+      await cloudinary.uploader.upload(file.tempFilePath)
+      .then(path => resolve(path))
+      .catch(error => { 
+        console.log(error);
+        reject(error)
+      });
     }
   });
 };
