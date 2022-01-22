@@ -79,7 +79,8 @@ const putFile = async (req, res = response) => {
       if(fs.existsSync(imgPath)){
         fs.unlinkSync(imgPath);
       }else{
-        const [public_id] = model.img.split('/').at(-1).split('.');
+        const path = model.img.split('/')
+        const [public_id] = path[path.length -1].split('.');
         cloudinary.uploader.destroy(public_id)
       }
     }
