@@ -67,8 +67,8 @@ const validateExtension = (
   extensions = defaultExtensions,
   callback
 ) => {
-  const fileExtension = fileName.split(".").at(-1);
-  if (!extensions.includes(fileExtension)) {
+  const fileExtension = fileName.split(".");
+  if (!extensions.includes(fileExtension[fileExtension.length -1])) {
     callback(`The extension ${fileExtension} is not allowed`);
   } else {
     return fileExtension;
